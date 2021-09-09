@@ -91,7 +91,7 @@ self.addEventListener('activate', function (event) {
 //               console.log("Cache Fallback: ", response)
 //               return response;
 //             } else{
-//               console.log("No existe este recurso en la cache.")
+//               console.log("The resource doesnt exists in the cache")
 //             }
 //           })
 //       })
@@ -127,9 +127,9 @@ self.addEventListener('activate', function (event) {
 //6 - Combination of strategies. This strategy work intercepting main.js request. In code order it implements: network only (dinamically caching the request), cache only (searching if the request it is in the app shell), and finally cache with network fallback. And if it all fails, the last catch redirect the user to a fallback page.
 
 function isInArray(url, cache) {
-  for (let i = 0; i < array.length; i++) {
+  for (let i = 0; i < cache.length; i++) {
     if (url === cache[i]) {
-      return true
+      return true;
     }
   }
   return false;
@@ -156,12 +156,10 @@ self.addEventListener("fetch", function (event) {
           return res;
         })
         .catch(function () {
-          console.log("No se ha encontrado el asset en el static cache.")
+          console.log("No asset found in static cache")
         })
     );
   } else {
-
-    console.log("hola")
     event.respondWith(
       caches.match(event.request)
         .then(function (response) {
