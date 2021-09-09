@@ -18,11 +18,44 @@ button.addEventListener('click', function(event) {
   }
 });
 
-fetch('https://httpbin.org/ip')
-  .then(function(res) {
+// fetch('https://httpbin.org/ip')
+//   .then(function(res) {
+//     return res.json();
+//   })
+//   .then(function(data) {
+//     console.log(data.origin);
+//     box.style.height = (data.origin.substr(0, 2) * 5) + 'px';
+//   });
+
+  let url = "https://httpbin.org/ip";
+  let networkResponse = false;
+
+
+  // BOX FROM NETWORK
+
+  fetch(url)
+  .then(function(res){
     return res.json();
   })
-  .then(function(data) {
-    console.log(data.origin);
-    box.style.height = (data.origin.substr(0, 2) * 5) + 'px';
-  });
+  .then(function(response){
+    networkResponse = true;
+    console.log("Network on demand: ", response)
+    box.style.height = (response.origin.substr(0, 2) * 5) + 'px';
+
+  })
+
+  // BOX FROM CACHE
+  if("caches" in window){
+    caches.match(url)
+    .then(function(res){
+      if(res){
+        return res.json()
+      }
+    })
+    .then(function(response){
+      if(!networkResponse){
+        console.log("Cache on demand: ", response)
+        box.style.height = (response.origin.substr(0, 2) * 5) + 'px';
+      }
+    })
+  }

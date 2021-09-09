@@ -1,5 +1,8 @@
 TASK:
 1) Identify the strategy we currently use in the Service Worker (for caching)
+
+The estrategy is: APP - SW - CACHE WITH NETWORK FALLBACK;
+
 2) Replace it with a "Network only" strategy => Clear Storage (in Dev Tools),
 reload & try using your app offline
 3) Replace it with a "Cache only" strategy => Clear Storage (in Dev Tools), reload &
